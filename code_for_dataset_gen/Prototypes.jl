@@ -1,16 +1,16 @@
-using TightlyBound
+using ThreeBodyTB
 using LinearAlgebra
 using DelimitedFiles
-using ..TightlyBound.Atomdata:atom_prefered_oxidation
-using ..TightlyBound.Atomdata:min_dimer_dist_dict
-using ..TightlyBound.Atomdata:sub_list
-using ..TightlyBound.Atomdata:electronegativity
-using ..TightlyBound.QE:loadXML
-using ..TightlyBound.CalcTB:distances_etc_3bdy_parallel
-using ..TightlyBound.CalcTB:calc_frontier
-using ..TightlyBound.ManageDatabase:prepare_database
+using ..ThreeBodyTB.Atomdata:atom_prefered_oxidation
+using ..ThreeBodyTB.Atomdata:min_dimer_dist_dict
+using ..ThreeBodyTB.Atomdata:sub_list
+using ..ThreeBodyTB.Atomdata:electronegativity
+using ..ThreeBodyTB.QE:loadXML
+using ..ThreeBodyTB.CalcTB:distances_etc_3bdy_parallel
+using ..ThreeBodyTB.CalcTB:calc_frontier
+using ..ThreeBodyTB.ManageDatabase:prepare_database
 
-TightlyBound.set_units(both="atomic")
+ThreeBodyTB.set_units(both="atomic")
 
 struct proto_data
 
@@ -38,7 +38,7 @@ end
 function check_frontier(crys)
 
     prepare_database(crys)
-    database = TightlyBound.ManageDatabase.database_cached
+    database = ThreeBodyTB.ManageDatabase.database_cached
     violation_list, vio_bool = calc_frontier(crys, database, test_frontier=true, verbose=false)
     
     return vio_bool
@@ -48,7 +48,7 @@ end
 function get_twobody_dist(A,B)
 
     prepare_database([A,B])
-    database = TightlyBound.ManageDatabase.database_cached
+    database = ThreeBodyTB.ManageDatabase.database_cached
     
     ab = database[(A,B)].min_dist * 1.0001
     println("min dist $A $B $ab")
@@ -109,7 +109,7 @@ end
 
 function setup_proto_data()
 
-    STRUCTDIR = TightlyBound.STRUCTDIR
+    STRUCTDIR = ThreeBodyTB.STRUCTDIR
 
     CalcD = Dict()
 
@@ -654,7 +654,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
         randi = Int64(round(rand()*1000000))
         try
             println("read crys")
-            c = TightlyBound.CrystalMod.makecrys(file)
+            c = ThreeBodyTB.CrystalMod.makecrys(file)
 
             if newst == "2D_tern" || newst == "3D_tern"
                 #arrange in electronegativity order
@@ -691,7 +691,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
                 #preadjust vol
                 avg_rad = 0.0
                 for t in c.types
-                    avg_rad += TightlyBound.Atomdata.atom_radius[t] / 100.0 / 0.529177
+                    avg_rad += ThreeBodyTB.Atomdata.atom_radius[t] / 100.0 / 0.529177
                 end
                 avg_rad = avg_rad / c.nat
                 
@@ -708,7 +708,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
 
                 println("START DFT.runSCF")
                 
-                dft_ref = TightlyBound.DFT.runSCF(c, inputstr=name, nprocs=procs, prefix="$name.qe.relax", directory="$dir", tmpdir="/$tmpname/$name.$randi", wannier=false, code="QE", skip=true, calculation=scf, dofree=free, cleanup=true)
+                dft_ref = ThreeBodyTB.DFT.runSCF(c, inputstr=name, nprocs=procs, prefix="$name.qe.relax", directory="$dir", tmpdir="/$tmpname/$name.$randi", wannier=false, code="QE", skip=true, calculation=scf, dofree=free, cleanup=true)
 
                 println("did dft, get new struct")
 
@@ -719,7 +719,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
                     println(c2)
                     println()
 
-                    dft_ref = TightlyBound.DFT.runSCF(c2, inputstr=name, nprocs=procs, prefix="$name.qe.relax", directory="$dir", tmpdir="/$tmpname/$name.$randi", wannier=false, code="QE", skip=true, calculation=scf, dofree=free, cleanup=true)
+                    dft_ref = ThreeBodyTB.DFT.runSCF(c2, inputstr=name, nprocs=procs, prefix="$name.qe.relax", directory="$dir", tmpdir="/$tmpname/$name.$randi", wannier=false, code="QE", skip=true, calculation=scf, dofree=free, cleanup=true)
                 end
 
                 println("END DFT.runSCF")
@@ -877,7 +877,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
                     newst_t = "coords"
                     ab_dir="$dir/$name_t"*"_vnscf_"*"$newst_t"*"_"*"$ncalc_t"        
                     println("try $ab_dir")
-                    dft = TightlyBound.QE.loadXML(ab_dir*"/qe.save")
+                    dft = ThreeBodyTB.QE.loadXML(ab_dir*"/qe.save")
 
                     ab = -dft.crys.coords[1,3] * dft.crys.A[3,3] * 2.0
                     println("ab $ab loaded")
@@ -915,7 +915,7 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
                     newst_t = "coords"
                     ab_dir="$dir/$name_t"*"_vnscf_"*"$newst_t"*"_"*"$ncalc_t"        
                     println("try $ab_dir")
-                    dft = TightlyBound.QE.loadXML(ab_dir*"/qe.save")
+                    dft = ThreeBodyTB.QE.loadXML(ab_dir*"/qe.save")
 
                     ab = -dft.crys.coords[1,3] * dft.crys.A[3,3] * 2.0
                     println("ab $ab loaded")
@@ -1247,11 +1247,11 @@ function  do_run(pd, T1, T2, T3, tmpname, dir, procs, torun; nscf_only = false, 
                         continue
                     end
 
-                    dft = TightlyBound.DFT.runSCF(c, nprocs=procs, prefix="qe", directory="$d", tmpdir="$d", wannier=false, code="QE", skip=true, cleanup=true)
+                    dft = ThreeBodyTB.DFT.runSCF(c, nprocs=procs, prefix="qe", directory="$d", tmpdir="$d", wannier=false, code="QE", skip=true, cleanup=true)
                     if calc_mode == "nscf"
 
                         try
-                            tbc, tbck = TightlyBound.AtomicProj.projwfx_workf(dft, nprocs=procs, directory=d, skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15, cleanup=true, only_kspace=true)
+                            tbc, tbck = ThreeBodyTB.AtomicProj.projwfx_workf(dft, nprocs=procs, directory=d, skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15, cleanup=true, only_kspace=true)
                         catch err3
                             println("err3")
                             println(err3)
@@ -1285,7 +1285,7 @@ function structure_substitute(atom1, atom2, atom3)
 
     transmetals = ["Sc", "Y", "La", "Ti", "Zr", "Hf", "V", "Nb", "Ta", "Cr", "Mo", "W", "Mn", "Tc", "Re", "Fe", "Ru", "Os", "Co", "Rh", "Ir", "Ni", "Pd", "Pt", "Cu", "Ag", "Au", "Zn", "Cd", "Hg", "B", "Al", "Ga", "In", "Tl"]
 
-    STRUCTDIR = TightlyBound.STRUCTDIR
+    STRUCTDIR = ThreeBodyTB.STRUCTDIR
     summ = readdlm("$STRUCTDIR/ternary/summ.csv")
 
     satom = sort([atom1, atom2, atom3])
@@ -1554,8 +1554,8 @@ function do_run_ternary_sub(at1, at2, at3, dir,procs, n1=6, n2 = 12)
         println()
         d="$dir/$name"*"_vnscf_"*"$i"        
         try
-            dft = TightlyBound.DFT.runSCF(c, nprocs=procs, prefix="qe", directory="$d", tmpdir="$d", wannier=false, code="QE", skip=true, cleanup=true)
-            tbc, tbck = TightlyBound.AtomicProj.projwfx_workf(dft, nprocs=procs, directory=d, skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15, cleanup=true, only_kspace=true)
+            dft = ThreeBodyTB.DFT.runSCF(c, nprocs=procs, prefix="qe", directory="$d", tmpdir="$d", wannier=false, code="QE", skip=true, cleanup=true)
+            tbc, tbck = ThreeBodyTB.AtomicProj.projwfx_workf(dft, nprocs=procs, directory=d, skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15, cleanup=true, only_kspace=true)
         catch
             println("err dft $d")
         end

@@ -83,7 +83,7 @@ include("MyOptim.jl")
 include("Relax.jl")
 using .CrystalMod:print_with_force_stress
 
-
+include("compile.jl")
 
 export scf_energy
 export scf_energy_force_stress
