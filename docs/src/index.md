@@ -1,4 +1,4 @@
-# TightlyBound.jl Documentation
+# ThreeBodyTB.jl Documentation
 
 
 **A three-body tight binding program written in Julia**

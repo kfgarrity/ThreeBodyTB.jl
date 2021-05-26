@@ -13,7 +13,7 @@ supported.
 Consists of lattice vectors, atomic positions, and atom types. 
 
 ```@example 1
-using TightlyBound
+using ThreeBodyTB
 A = [2.1 2.1 0.0;2.1 0.0 2.1;0.0 2.1 2.1];
 pos = [0.0 0.0 0.0];
 types =        ["Al"];

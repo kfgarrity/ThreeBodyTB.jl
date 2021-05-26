@@ -1,7 +1,7 @@
 
 # User Functions
 
-All of these functions are exported from TightlyBound for your convenience.
+All of these functions are exported from ThreeBodyTB for your convenience.
 
 ## Crystal / Energy
 

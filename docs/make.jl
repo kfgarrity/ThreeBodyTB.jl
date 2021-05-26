@@ -1,7 +1,7 @@
 push!(LOAD_PATH,"../src/")
-using Documenter, TightlyBound
+using Documenter, ThreeBodyTB
 
-#makedocs(sitename="TightlyBound.jl Documentation")
+#makedocs(sitename="ThreeBodyTB.jl Documentation")
 
 
 #        prettyurls = get(ENV, "CI", nothing) == "true",
@@ -14,7 +14,7 @@ using Documenter, TightlyBound
 
 @info "Making documentation..."
 makedocs(
-    sitename="TightlyBound.jl Documentation",
+    sitename="ThreeBodyTB.jl Documentation",
     authors = "Kevin F. Garrity",
     format = Documenter.HTML(
         assets = ["assets/favicon.ico", "assets/nist-combined.css"],
@@ -36,7 +36,7 @@ makedocs(
 
 @info "edit docs"
 
-DD = TightlyBound.DOCSDIR
+DD = ThreeBodyTB.DOCSDIR
 
 stuff=readlines("$DD/nist_stuff/html_stuff.txt")
 stuff2=readlines("$DD/nist_stuff/html_stuff_v2.txt")
@@ -80,6 +80,6 @@ end
 @info "Deploy docs ..."
 
 deploydocs(
-    repo = "github.com/kfgarrity/TightlyBound.jl.git",
+    repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
     devbranch = "main"
 )
