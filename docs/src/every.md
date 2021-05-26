@@ -72,7 +72,7 @@ Modules = [ThreeBodyTB.CalcTB]
 ThreeBodyTB.CrystalMod.parsePOSCAR
 ThreeBodyTB.CrystalMod.parseQEinput
 ThreeBodyTB.CrystalMod.generate_supercell
-ThreeBodyTB.CrystalMod.generate_random
+ThreeBodyTB.CrystalMod.generate_random_distortion
 ThreeBodyTB.CrystalMod.write_poscar
 ThreeBodyTB.CrystalMod.write_efs
 ThreeBodyTB.CrystalMod.get_grid
