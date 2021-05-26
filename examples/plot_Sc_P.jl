@@ -1,4 +1,4 @@
-using TightlyBound
+using ThreeBodyTB
 using Plots
 
 #setup chosen Plots backend, i recommend pyplot

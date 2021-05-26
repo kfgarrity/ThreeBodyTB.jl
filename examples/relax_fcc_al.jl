@@ -1,4 +1,4 @@
-using TightlyBound
+using ThreeBodyTB
 using Plots
 
 #setup chosen Plots backend, i recommend pyplot
@@ -28,10 +28,10 @@ energy, forces, stress, tbc = scf_energy_force_stress(c)
 
 
 println("Initial Forces--")
-println(TightlyBound.Utility.arr2str(forces))
+println(ThreeBodyTB.Utility.arr2str(forces))
 println()
 println("Initial Stress--")
-println(TightlyBound.Utility.arr2str(stress))
+println(ThreeBodyTB.Utility.arr2str(stress))
 println()
 
 
@@ -41,10 +41,10 @@ println("Final crystal:")
 println(cfinal)
 println()
 println("Final Forces--")
-println(TightlyBound.Utility.arr2str(forces))
+println(ThreeBodyTB.Utility.arr2str(forces))
 println()
 println("Finial Stress--")
-println(TightlyBound.Utility.arr2str(stress))
+println(ThreeBodyTB.Utility.arr2str(stress))
 println()
 
 #plot band structure

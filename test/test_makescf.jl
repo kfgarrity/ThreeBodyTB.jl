@@ -1,4 +1,4 @@
-using TightlyBound
+using ThreeBodyTB
 using Test
 using Suppressor
 
@@ -10,7 +10,7 @@ using Suppressor
         A=[ [10.0 0 0]; [0 10.0 0]; [ 0 0 10.0]]
         c=makecrys(A, pos, types, units="Bohr")
 
-        tmpdir, prefix, inputfile_str = TightlyBound.QE.makeSCF(c)
+        tmpdir, prefix, inputfile_str = ThreeBodyTB.QE.makeSCF(c)
 
         @test occursin("Li", inputfile_str)
 

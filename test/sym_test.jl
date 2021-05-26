@@ -1,5 +1,5 @@
 using Test
-using TightlyBound
+using ThreeBodyTB
 
 
 function test1()
@@ -17,8 +17,8 @@ function test1()
         for orb1 = [:s, :pz, :px, :py, :dz2,:dxz,:dyz,:dx2_y2,:dxy]
             for orb2 = [:s, :pz, :px, :py, :dz2,:dxz,:dyz,:dx2_y2,:dxy]
 
-                t = TightlyBound.CalcTB.symmetry_factor(orb1, orb2, lmn, abc)
-                t2 = TightlyBound.CalcTB.symmetry_factor_fit(orb1, orb2, lmn)
+                t = ThreeBodyTB.CalcTB.symmetry_factor(orb1, orb2, lmn, abc)
+                t2 = ThreeBodyTB.CalcTB.symmetry_factor_fit(orb1, orb2, lmn)
 
 
 #                println(orb1," ", orb2, "   ", t, "   " , sum(t2.*abc) )
@@ -31,8 +31,8 @@ function test1()
         end             
         for orb1 = [:s, :pz, :px, :py, :dxy, :dz2, :dxz, :dyz]
             for orb2 = [:s, :pz, :px, :py, :dxy, :dz2, :dxz, :dyz]
-                tot1 += TightlyBound.CalcTB.symmetry_factor(orb1, orb2, lmnx, abc)
-                tot2 += TightlyBound.CalcTB.symmetry_factor(orb1, orb2, lmny, abc)
+                tot1 += ThreeBodyTB.CalcTB.symmetry_factor(orb1, orb2, lmnx, abc)
+                tot2 += ThreeBodyTB.CalcTB.symmetry_factor(orb1, orb2, lmny, abc)
             end
         end
 

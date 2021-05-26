@@ -1,4 +1,4 @@
-using TightlyBound
+using ThreeBodyTB
 using Test
 
 include("crystal_testing.jl")

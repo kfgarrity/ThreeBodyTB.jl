@@ -1,11 +1,11 @@
 using Test
-using TightlyBound
+using ThreeBodyTB
 using Suppressor
 
 #include("../includes_laguerre.jl")
 #include("../Ewald.jl")
 
-TESTDIR=TightlyBound.TESTDIR
+TESTDIR=ThreeBodyTB.TESTDIR
 
 function test_basics()
 
@@ -14,8 +14,8 @@ function test_basics()
         @suppress begin
 #        if true
 
-            units_old = TightlyBound.set_units()
-            TightlyBound.set_units(both="atomic")
+            units_old = ThreeBodyTB.set_units()
+            ThreeBodyTB.set_units(both="atomic")
 
             
             types=["Al"];
@@ -37,11 +37,11 @@ function test_basics()
             @test abs(energy - -0.28707042) < 1e-2
             @test abs(energyS - energy) < 1e-5
 
-            energy_fft = TightlyBound.TB.calc_energy_fft(tbc)
+            energy_fft = ThreeBodyTB.TB.calc_energy_fft(tbc)
 
             @test abs(energy - energy_fft) < 1e-5
 
-            energy_calc = TightlyBound.TB.calc_energy(tbc)
+            energy_calc = ThreeBodyTB.TB.calc_energy(tbc)
 
             @test abs(energy - energy_calc) < 1e-5
 
@@ -62,14 +62,14 @@ function test_basics()
             
             @test sum(abs.(ham2 - ham)) < 1e-7
 
-            tbck = TightlyBound.TB.read_tb_crys_kspace("$TESTDIR/data_forces/al_fcc_projham_K.xml.gz")
+            tbck = ThreeBodyTB.TB.read_tb_crys_kspace("$TESTDIR/data_forces/al_fcc_projham_K.xml.gz")
 
             vects3, vals3, ham3, S3,e3 =  Hk(tbck, [0 0 0 ])
 
             @test sum(abs.(vals3[1] - vals[1])) < 0.05
 
             tb = deepcopy(tbc.tb)
-            TightlyBound.TB.trim(tb)
+            ThreeBodyTB.TB.trim(tb)
 
             vectsT, valsT, hamT, ST,eT =  Hk(tb, [0 0 0 ])
 
@@ -77,7 +77,7 @@ function test_basics()
 #            println("VALST $valsT")
 #            println("VALS2 $vals2")
 
-            data_onsite, data_arr = TightlyBound.TB.organizedata(tbc.crys, tbc.tb)
+            data_onsite, data_arr = ThreeBodyTB.TB.organizedata(tbc.crys, tbc.tb)
 
 #            @test abs(data_onsite[1,5] - -0.677103) < 1e-2  #onsite s orbital
 #            @test abs(data_onsite[1,7] - 5.36874) < 1e-2 #n.n. distance
@@ -87,34 +87,34 @@ function test_basics()
             @test abs(data_onsite[1,7] - 5.368743819186305) < 1e-2 #n.n. distance
             @test abs(data_onsite[1,11] - 1.0) < 1e-3 # overlap onsite
 
-            h1, dq = TightlyBound.TB.get_h1(tbc)
+            h1, dq = ThreeBodyTB.TB.get_h1(tbc)
             
             @test dq[1] < 1e-5
 
-            en, eden, VECTS, VALS, err = TightlyBound.TB.get_energy_electron_density_kspace(tbck)
+            en, eden, VECTS, VALS, err = ThreeBodyTB.TB.get_energy_electron_density_kspace(tbck)
 
             @test abs(en - -0.28962628722369677) < 1e-3
 
-            tbck2 = TightlyBound.SCF.remove_scf_from_tbc(tbck)
-            tbc2 = TightlyBound.SCF.remove_scf_from_tbc(tbc)
+            tbck2 = ThreeBodyTB.SCF.remove_scf_from_tbc(tbck)
+            tbc2 = ThreeBodyTB.SCF.remove_scf_from_tbc(tbc)
 
-            en2, eden2, VECTS2, VALS2, err2 = TightlyBound.TB.get_energy_electron_density_kspace(tbck2)
+            en2, eden2, VECTS2, VALS2, err2 = ThreeBodyTB.TB.get_energy_electron_density_kspace(tbck2)
 
             @test abs(en - en2) < 1e-3
 
-            H = TightlyBound.Atomdata.atoms["H"]
+            H = ThreeBodyTB.Atomdata.atoms["H"]
 
             @test H.Z == 1 
 
-            energies, dos, pdos, names  =  TightlyBound.DOS.gaussian_dos(tbc, do_display=false)
+            energies, dos, pdos, names  =  ThreeBodyTB.DOS.gaussian_dos(tbc, do_display=false)
 
             @test length(energies) == length(dos)
 
-            energies, dos, pdos, names  =  TightlyBound.DOS.gaussian_dos(tbck, do_display=false)
+            energies, dos, pdos, names  =  ThreeBodyTB.DOS.gaussian_dos(tbck, do_display=false)
 
         @test length(energies) == length(dos)
             @test abs(sum(dos) * (energies[2] - energies[1]) - 4.0) < 1e-2
-            TightlyBound.set_units(energy = units_old[1], length=units_old[2])
+            ThreeBodyTB.set_units(energy = units_old[1], length=units_old[2])
             
         end
     end

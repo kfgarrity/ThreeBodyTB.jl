@@ -100,7 +100,7 @@ function add_to_database(s::Set; directory = missing)#
         if !haskey(database_cached , (a1, a1))
             loaded = false
             for d in dirlist
-                f =  "$d/coef.el.2bdy.$a1.xml.gz"
+                f =  "$d/els/coef.el.2bdy.$a1.xml.gz"
 
                 if isfile(f) || isfile(f*".gz")
                     try
@@ -130,7 +130,7 @@ function add_to_database(s::Set; directory = missing)#
 
             loaded = false
             for d in dirlist
-                f = "$d/coef.el.3bdy.$a1.xml.gz"
+                f = "$d/els/coef.el.3bdy.$a1.xml.gz"
 
                 if isfile(f) || isfile(f*".gz")
                     try
@@ -186,8 +186,8 @@ function add_to_database(s::Set; directory = missing)#
             loaded = false
             for d in dirlist
 
-                fab =  "$d/coef.el.2bdy.$a1.$a2.xml.gz"
-                fba =  "$d/coef.el.2bdy.$a2.$a1.xml.gz"
+                fab =  "$d/binary/coef.el.2bdy.$a1.$a2.xml.gz"
+                fba =  "$d/binary/coef.el.2bdy.$a2.$a1.xml.gz"
 
                 f=missing
                 if isfile(fab) || isfile(fab*".gz")
@@ -238,8 +238,8 @@ function add_to_database(s::Set; directory = missing)#
 
             loaded = false
             for d in dirlist
-                fab =  "$d/coef.el.3bdy.$a1.$a2.xml.gz"
-                fba =  "$d/coef.el.3bdy.$a2.$a1.xml.gz"
+                fab =  "$d/binary/coef.el.3bdy.$a1.$a2.xml.gz"
+                fba =  "$d/binary/coef.el.3bdy.$a2.$a1.xml.gz"
 
                 f=missing
                 if isfile(fab) || isfile(fab*".gz")
@@ -287,6 +287,8 @@ function add_to_database(s::Set; directory = missing)#
         end
     elseif length(s) == 3
 
+        println("warning, ternary not currently supported")
+        return
 
         a1 = Symbol(at_arr[1])
         a2 = Symbol(at_arr[2])

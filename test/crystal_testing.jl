@@ -1,11 +1,11 @@
 using Test
-using TightlyBound
+using ThreeBodyTB
 using Suppressor
 
 #basic loading
 
 #name of test directory
-TESTDIR=TightlyBound.TESTDIR
+TESTDIR=ThreeBodyTB.TESTDIR
 
 @testset "basic crystal dftout tests" begin
     types=["Li"]
@@ -41,7 +41,7 @@ TESTDIR=TightlyBound.TESTDIR
         @test_throws ErrorException("Error forces") makedftout(c, energy,energy_smear, forces2, zeros(3,3))
     end
 
-    dft_out = TightlyBound.QE.loadXML("$TESTDIR/dimer.save/")
+    dft_out = ThreeBodyTB.QE.loadXML("$TESTDIR/dimer.save/")
 
     convert_ryd_ha = 2.0
 
@@ -62,11 +62,11 @@ end
 #        println(c)
         c2 = c * [2,2,2]
      
-        TightlyBound.CrystalMod.generate_random_distortion(c2,0.01,0.01)
-        TightlyBound.CrystalMod.write_poscar(c2,"$TESTDIR/POSCAR_tmp")
+        ThreeBodyTB.CrystalMod.generate_random_distortion(c2,0.01,0.01)
+        ThreeBodyTB.CrystalMod.write_poscar(c2,"$TESTDIR/POSCAR_tmp")
         rm("$TESTDIR/POSCAR_tmp")
 
-        TightlyBound.CrystalMod.write_efs(c, 0.0, zeros(1,3), zeros(3,3), "$TESTDIR/qe.out")
+        ThreeBodyTB.CrystalMod.write_efs(c, 0.0, zeros(1,3), zeros(3,3), "$TESTDIR/qe.out")
         rm("$TESTDIR/qe.out")
         
 
@@ -89,7 +89,7 @@ if false
         
         c=makecrys(A, pos, types, units="Bohr")
         
-        d = TightlyBound.DFT.runSCF(c, nprocs=4)
+        d = ThreeBodyTB.DFT.runSCF(c, nprocs=4)
         
         @test -14.35143737 ≈ d.energy
 

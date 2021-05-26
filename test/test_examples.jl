@@ -1,8 +1,8 @@
-using TightlyBound
+using ThreeBodyTB
 using Test
 using Suppressor
 
-EXAMPLESDIR=TightlyBound.EXAMPLESDIR
+EXAMPLESDIR=ThreeBodyTB.EXAMPLESDIR
 
 for f in readdir("$EXAMPLESDIR")
     if occursin(".jl", f) && !occursin("~", f)

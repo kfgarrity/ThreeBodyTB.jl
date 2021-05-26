@@ -1,9 +1,9 @@
-using TightlyBound
+using ThreeBodyTB
 using Test
 using Suppressor
 
 
-SRCDIR=TightlyBound.SRCDIR
+SRCDIR=ThreeBodyTB.SRCDIR
 
 @testset "testing prototypes" begin
     @suppress begin 
@@ -18,7 +18,7 @@ SRCDIR=TightlyBound.SRCDIR
 
         @test t == tref
 
-        TightlyBound.set_units(both="eVAng")
+        ThreeBodyTB.set_units(both="eVAng")
 
     end
 end

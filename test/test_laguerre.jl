@@ -1,5 +1,5 @@
 using Test
-using TightlyBound
+using ThreeBodyTB
 using Suppressor
 #=
 include("../Utility.jl")
@@ -36,20 +36,20 @@ function test1()
 #        if true
 
             database = Dict()
-            database[(:Li, :Li)] = TightlyBound.CalcTB.make_coefs(Set(["Li", "Li"]), 2)
+            database[(:Li, :Li)] = ThreeBodyTB.CalcTB.make_coefs(Set(["Li", "Li"]), 2)
             
-            tbc1 = TightlyBound.CalcTB.calc_tb_fast(c1, database, use_threebody=false);
-            tbc2 = TightlyBound.CalcTB.calc_tb_fast(c2, database, use_threebody=false);
-            tbc3 = TightlyBound.CalcTB.calc_tb_fast(c3, database, use_threebody=false);
-            tbc4 = TightlyBound.CalcTB.calc_tb_fast(c4, database, use_threebody=false);
-            tbc5 = TightlyBound.CalcTB.calc_tb_fast(c5, database, use_threebody=false);
-            tbc6 = TightlyBound.CalcTB.calc_tb_fast(c6, database, use_threebody=false);
-            tbc7 = TightlyBound.CalcTB.calc_tb_fast(c7, database, use_threebody=false);
-            tbc8 = TightlyBound.CalcTB.calc_tb_fast(c8, database, use_threebody=false);
-            tbc9 = TightlyBound.CalcTB.calc_tb_fast(c9, database, use_threebody=false);
+            tbc1 = ThreeBodyTB.CalcTB.calc_tb_fast(c1, database, use_threebody=false);
+            tbc2 = ThreeBodyTB.CalcTB.calc_tb_fast(c2, database, use_threebody=false);
+            tbc3 = ThreeBodyTB.CalcTB.calc_tb_fast(c3, database, use_threebody=false);
+            tbc4 = ThreeBodyTB.CalcTB.calc_tb_fast(c4, database, use_threebody=false);
+            tbc5 = ThreeBodyTB.CalcTB.calc_tb_fast(c5, database, use_threebody=false);
+            tbc6 = ThreeBodyTB.CalcTB.calc_tb_fast(c6, database, use_threebody=false);
+            tbc7 = ThreeBodyTB.CalcTB.calc_tb_fast(c7, database, use_threebody=false);
+            tbc8 = ThreeBodyTB.CalcTB.calc_tb_fast(c8, database, use_threebody=false);
+            tbc9 = ThreeBodyTB.CalcTB.calc_tb_fast(c9, database, use_threebody=false);
             
             tbc_list = [tbc1 tbc2 tbc3 tbc4 tbc5 tbc6 tbc7 tbc8 tbc9]
-            newdatabase = TightlyBound.FitTB.do_fitting(tbc_list, fit_threebody=false, do_plot=false)
+            newdatabase = ThreeBodyTB.FitTB.do_fitting(tbc_list, fit_threebody=false, do_plot=false)
             #        println("newdartabase")
             #        println(newdatabase[("Li", "Li")])
             @test sum(abs.(newdatabase[(:Li, :Li)].datH .- database[(:Li, :Li)].datH)) ≤ 1e-5
