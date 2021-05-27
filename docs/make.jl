@@ -1,4 +1,5 @@
 push!(LOAD_PATH,"../src/")
+push!(LOAD_PATH,"../")
 using Documenter, ThreeBodyTB
 
 #makedocs(sitename="ThreeBodyTB.jl Documentation")
