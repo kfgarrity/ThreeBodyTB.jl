@@ -38,7 +38,7 @@ CHECK FRONTIER - everything fine
 onsite
 -----
 
-  0.513602 seconds (3.00 M allocations: 130.210 MiB, 45.83% gc time)
+  0.254613 seconds (3.00 M allocations: 130.210 MiB, 11.41% gc time)
 ------
 Do SCF
 Mixing mode: pulay
@@ -85,7 +85,7 @@ show(stdout, &quot;text/plain&quot;, stress)</code></pre><pre class="documenter-
 
 Calculate Force, Stress (no scf)
 get_energy_force_stress_fft
-  1.077409 seconds (7.54 M allocations: 695.992 MiB, 16.00% gc time)
+  0.974550 seconds (7.54 M allocations: 695.992 MiB, 19.42% gc time)
 done
 ----
 energy -10.26158075647966
@@ -155,7 +155,7 @@ YES convergence in 2 iters, energy -10.261571568465204 eV   dq = [-1.163, 1.163]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.086464 seconds (7.54 M allocations: 695.992 MiB, 14.73% gc time)
+  0.970941 seconds (7.54 M allocations: 695.992 MiB, 17.70% gc time)
 
 FCALL 1 en:  -0.7542113251935092 (Ryd)  fsum:  9.238863016187277e-13  ssum:  0.0026132419734498555    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -212,7 +212,7 @@ YES convergence in 9 iters, energy -10.67651628880611 eV   dq = [-0.949, 0.949]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  0.843124 seconds (5.79 M allocations: 562.676 MiB, 13.99% gc time)
+  0.743792 seconds (5.79 M allocations: 562.676 MiB, 19.23% gc time)
 
 FCALL 2 en:  -0.7847091885395202 (Ryd)  fsum:  9.227625653676464e-9  ssum:  0.00019373782723556385    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -288,7 +288,7 @@ YES convergence in 6 iters, energy -10.681860692898434 eV   dq = [-0.973, 0.973]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  0.861590 seconds (5.79 M allocations: 562.687 MiB, 14.65% gc time)
+  0.737663 seconds (5.79 M allocations: 562.687 MiB, 17.89% gc time)
 
 FCALL 3 en:  -0.7851019948524665 (Ryd)  fsum:  4.1099117001425885e-8  ssum:  1.1066828403014704e-6    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -325,7 +325,7 @@ YES convergence in 2 iters, energy -10.68186477227708 eV   dq = [-0.973, 0.973]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  0.841636 seconds (5.79 M allocations: 562.692 MiB, 13.15% gc time)
+  0.735593 seconds (5.79 M allocations: 562.692 MiB, 18.66% gc time)
 
 FCALL 4 en:  -0.7851022946811578 (Ryd)  fsum:  1.8905255210452969e-6  ssum:  1.1439521723531531e-6    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -415,7 +415,7 @@ YES convergence in 2 iters, energy -10.681867888997637 eV   dq = [-0.973, 0.973]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  0.855849 seconds (5.79 M allocations: 562.689 MiB, 13.31% gc time)
+  0.724192 seconds (5.79 M allocations: 562.689 MiB, 17.19% gc time)
 
 FCALL 5 en:  -0.7851025237558102 (Ryd)  fsum:  8.304784685428587e-7  ssum:  1.0586783267508836e-6    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -764,4 +764,4 @@ Stress
 3×3 Array{Float64,2}:
  5.61198e-5  1.79656e-7  1.79656e-7
  1.79656e-7  5.61198e-5  1.79656e-7
- 1.79656e-7  1.79656e-7  5.61198e-5</pre><p>Energy is lower, stress is near zero, forces are zero by symmetry in Zinc Blende structure.</p><p>Force/Stress defaults are eV/Ang and eV/Ang^3.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../ug_fit/">Fit Coefficients »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 28 May 2021 13:07">Friday 28 May 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+ 1.79656e-7  1.79656e-7  5.61198e-5</pre><p>Energy is lower, stress is near zero, forces are zero by symmetry in Zinc Blende structure.</p><p>Force/Stress defaults are eV/Ang and eV/Ang^3.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../ug_fit/">Fit Coefficients »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 28 May 2021 13:28">Friday 28 May 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
