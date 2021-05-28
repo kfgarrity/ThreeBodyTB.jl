@@ -18,8 +18,8 @@ jobs:
             Pkg.instantiate()'
       - run: |
           julia --project=docs -e '
-            using Documenter: ThreeBodyTB
-            using testdocs
+            using Documenter: doctest
+            using ThreeBodyTB
             ThreeBodyTB(testdocs)'
       - run: julia --project=docs docs/make.jl
         env:
