@@ -91,8 +91,14 @@ end
 
 @info "Deploy docs ..."
 
-deploydocs(
-    repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
+deploydocs(;
+    repo="github.com/kfgarrity/testdocs.jl",
     push_preview=true,
 )
+
+
+#deploydocs(
+#    repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
+#    push_preview=true,
+#)
 
