@@ -93,6 +93,6 @@ end
 
 deploydocs(
     repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
-    devbranch = "main"
+    push_preview=true,
 )
 
