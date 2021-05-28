@@ -1,3 +1,5 @@
+push!(LOAD_PATH,"../src/")
+
 using Documenter, ThreeBodyTB
 
 
@@ -17,7 +19,7 @@ makedocs(sitename="ThreeBodyTB.jl Documentation")
 #  ),
 
 
-#=
+
 
 @info "Making documentation..."
 makedocs(
@@ -90,4 +92,4 @@ deploydocs(
     repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
     devbranch = "main"
 )
-=#
+
