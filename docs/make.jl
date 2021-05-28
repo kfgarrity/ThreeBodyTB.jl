@@ -1,9 +1,11 @@
-push!(LOAD_PATH,"../src/")
-
-using Pkg
-Pkg.add("../")
-
 using Documenter, ThreeBodyTB
+
+
+makedocs(sitename="ThreeBodyTB.jl Documentation")
+
+
+#push!(LOAD_PATH,"../src/")
+
 
 #makedocs(sitename="ThreeBodyTB.jl Documentation")
 
@@ -15,6 +17,7 @@ using Documenter, ThreeBodyTB
 #  ),
 
 
+#=
 
 @info "Making documentation..."
 makedocs(
@@ -87,3 +90,4 @@ deploydocs(
     repo = "github.com/kfgarrity/ThreeBodyTB.jl.git",
     devbranch = "main"
 )
+=#
