@@ -2,6 +2,9 @@ push!(LOAD_PATH,"../src/")
 
 using Documenter, ThreeBodyTB
 
+current=pwd()
+include("../deps/build.jl")
+cd(current)
 
 makedocs(sitename="ThreeBodyTB.jl Documentation")
 
