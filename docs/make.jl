@@ -1,5 +1,8 @@
 push!(LOAD_PATH,"../src/")
-push!(LOAD_PATH,"../")
+
+using Pkg
+Pkg.add("../")
+
 using Documenter, ThreeBodyTB
 
 #makedocs(sitename="ThreeBodyTB.jl Documentation")
