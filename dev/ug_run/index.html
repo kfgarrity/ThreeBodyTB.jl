@@ -38,7 +38,7 @@ CHECK FRONTIER - everything fine
 onsite
 -----
 
-  0.343031 seconds (3.00 M allocations: 130.210 MiB, 13.22% gc time)
+  0.262314 seconds (3.00 M allocations: 130.210 MiB, 14.61% gc time)
 ------
 Do SCF
 Mixing mode: pulay
@@ -58,12 +58,12 @@ SCF CALC 0006 energy  -10.26272388  en_diff:   4.555090E-03  dq_diff:   5.804629
 SCF CALC 0007 energy  -10.26180215  en_diff:   9.217278E-04  dq_diff:   1.160782E-03
 SCF CALC 0008 energy  -10.26161767  en_diff:   1.844756E-04  dq_diff:   2.321653E-04
 
-YES convergence in 8 iters, energy -10.261617674454548 eV   dq = [-1.163, 1.163]
+YES convergence in 8 iters, energy -10.261617674454513 eV   dq = [-1.163, 1.163]
 END SCF ------------------
 
 scf_energy success, done
 
-The energy is -10.261617674454548 eV</pre><p>This returns the (non-magnetic) atomization energy, and a tight-binding object with the TB matrix elements and SCF electron density calculated for post-processing.</p><h2 id="**Plot-the-band-structure.**"><a class="docs-heading-anchor" href="#**Plot-the-band-structure.**"><strong>Plot the band structure.</strong></a><a id="**Plot-the-band-structure.**-1"></a><a class="docs-heading-anchor-permalink" href="#**Plot-the-band-structure.**" title="Permalink"></a></h2><p>Using the tight-binding object <code>tbc_alp</code> from above. Note: SCF must be done first.</p><pre><code class="language-julia">plot_bandstr(tbc_alp, do_display=false);</code></pre><pre class="documenter-example-output">plot_bandstr
+The energy is -10.261617674454513 eV</pre><p>This returns the (non-magnetic) atomization energy, and a tight-binding object with the TB matrix elements and SCF electron density calculated for post-processing.</p><h2 id="**Plot-the-band-structure.**"><a class="docs-heading-anchor" href="#**Plot-the-band-structure.**"><strong>Plot the band structure.</strong></a><a id="**Plot-the-band-structure.**-1"></a><a class="docs-heading-anchor-permalink" href="#**Plot-the-band-structure.**" title="Permalink"></a></h2><p>Using the tight-binding object <code>tbc_alp</code> from above. Note: SCF must be done first.</p><pre><code class="language-julia">plot_bandstr(tbc_alp, do_display=false);</code></pre><pre class="documenter-example-output">plot_bandstr
 align vbm
 color = blue markersize = 0</pre><p><img src="../alp.png" alt="AlP plot"/></p><p>Use <code>do_display=true</code> to produce an interactive plot. Here is is <code>false</code> because we are saving a static figure with <code>savefig</code> for the docs.</p><p>The default <code>plot_bandstr</code> just picks some random kpoints, but you can add your own kpath. We also project onto the <em>s</em> orbital of Al.</p><pre><code class="language-julia">kpath=[0.0 0.0 0.0; 0.5 0.5 0.5; 0.0 0.5 0.5];
 knames=[&quot;Γ&quot;, &quot;X&quot;, &quot;V&quot;];
@@ -85,14 +85,14 @@ show(stdout, &quot;text/plain&quot;, stress)</code></pre><pre class="documenter-
 
 Calculate Force, Stress (no scf)
 get_energy_force_stress_fft
-  1.373674 seconds (7.54 M allocations: 695.992 MiB, 14.35% gc time)
+  0.918192 seconds (7.54 M allocations: 695.992 MiB, 16.94% gc time)
 done
 ----
-energy -10.261580756479693
+energy -10.26158075647966
 
 Forces
 2×3 Array{Float64,2}:
- -1.37139e-11  -1.37137e-11  -1.37134e-11
+ -1.37139e-11  -1.37134e-11  -1.37134e-11
   0.0           0.0           0.0
 Stress
 3×3 Array{Float64,2}:
@@ -141,7 +141,7 @@ SCF CALC 0009 energy  -10.26158076  en_diff:   3.691797E-05  dq_diff:   4.643256
 SCF CALC 0010 energy  -10.26157337  en_diff:   7.383469E-06  dq_diff:   9.286542E-06
 SCF CALC 0011 energy  -10.26157190  en_diff:   1.476750E-06  dq_diff:   1.857307E-06
 
-YES convergence in 11 iters, energy -10.261571896261033 eV   dq = [-1.163, 1.163]
+YES convergence in 11 iters, energy -10.261571896260975 eV   dq = [-1.163, 1.163]
 END SCF ------------------
 
 starting vec
@@ -154,13 +154,13 @@ START SCF ----------------
 SCF CALC 0001 energy  -10.26157160
 SCF CALC 0002 energy  -10.26157157  en_diff:   3.244713E-08  dq_diff:   2.203338E-07
 
-YES convergence in 2 iters, energy -10.261571568465252 eV   dq = [-1.163, 1.163]
+YES convergence in 2 iters, energy -10.261571568465204 eV   dq = [-1.163, 1.163]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.290317 seconds (7.54 M allocations: 695.992 MiB, 13.33% gc time)
+  0.914542 seconds (7.54 M allocations: 695.992 MiB, 15.84% gc time)
 
-FCALL 1 en:  -0.7542113251935126 (Ryd)  fsum:  9.238863697166033e-13  ssum:  0.0026132419734498447    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FCALL 1 en:  -0.7542113251935092 (Ryd)  fsum:  9.238863016187277e-13  ssum:  0.0026132419734498555    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 A1=     +2.60000  +2.60000  +0.00000  |  +0.13853  +0.00000  +0.00000
 A2=     +2.60000  +0.00000  +2.60000  |  +0.00000  +0.13853  +0.00000
@@ -181,13 +181,13 @@ SCF CALC 0007 energy  -10.67658984  en_diff:   3.078795E-04  dq_diff:   2.478466
 SCF CALC 0008 energy  -10.67652847  en_diff:   6.136700E-05  dq_diff:   4.961009E-05
 SCF CALC 0009 energy  -10.67651618  en_diff:   1.229194E-05  dq_diff:   9.918999E-06
 
-YES convergence in 9 iters, energy -10.676516181896742 eV   dq = [-0.949, 0.949]
+YES convergence in 9 iters, energy -10.676516181896705 eV   dq = [-0.949, 0.949]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.036131 seconds (5.79 M allocations: 562.674 MiB, 13.76% gc time)
+  0.728280 seconds (5.79 M allocations: 562.675 MiB, 16.46% gc time)
 
-FCALL 2 en:  -0.7847091806818296 (Ryd)  fsum:  9.227596612358425e-9  ssum:  0.0001937395957950068    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FCALL 2 en:  -0.7847091806818268 (Ryd)  fsum:  9.227596623833967e-9  ssum:  0.0001937395957950971    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 A1=     +2.80318  +2.80318  +0.00000  |  -0.01027  -0.00000  -0.00000
 A2=     +2.80318  +0.00000  +2.80318  |  -0.00000  -0.01027  -0.00000
@@ -196,20 +196,20 @@ A3=     +0.00000  +2.80318  +2.80318  |  -0.00000  -0.00000  -0.01027
 Al   +0.00000  +0.00000  +0.00000 |  -0.00000  -0.00000  -0.00000
 P    +0.25000  +0.25000  +0.25000 |  +0.00000  +0.00000  +0.00000
 
-MY CG quadratic linesearch iter 1 fn val: -0.7847091806818296 | rms grad: 0.057596919388835356 within_stepsize: false , old step: 0.3275188899474507 , new step_size: 0.10565125482175829
-MY CG quadratic linesearch iter 2 fn val: -0.7847091806818296 | rms grad: 0.057596919388835356 within_stepsize: true , old step: 0.10565125482175829 , new step_size: 0.15847688223263742
+MY CG quadratic linesearch iter 1 fn val: -0.7847091806818268 | rms grad: 0.05759691938886312 within_stepsize: false , old step: 0.32751888994746975 , new step_size: 0.10565125482176443
+MY CG quadratic linesearch iter 2 fn val: -0.7847091806818268 | rms grad: 0.05759691938886312 within_stepsize: true , old step: 0.10565125482176443 , new step_size: 0.15847688223264667
 
 START SCF ----------------
 SCF CALC 0001 energy  -10.68005595
 SCF CALC 0002 energy  -10.68005582  en_diff:   1.305952E-07  dq_diff:   4.971397E-07
 
-YES convergence in 2 iters, energy -10.680055819817525 eV   dq = [-0.959, 0.959]
+YES convergence in 2 iters, energy -10.68005581981755 eV   dq = [-0.959, 0.959]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.010660 seconds (5.79 M allocations: 562.691 MiB, 13.06% gc time)
+  0.737739 seconds (5.79 M allocations: 562.691 MiB, 15.87% gc time)
 
-FCALL 3 en:  -0.7849693391759869 (Ryd)  fsum:  1.2197894353630662e-8  ssum:  0.0001161399209718544    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FCALL 3 en:  -0.7849693391759887 (Ryd)  fsum:  1.2197893563425894e-8  ssum:  0.00011613992097191586    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 A1=     +2.79405  +2.79405  -0.00000  |  -0.00616  -0.00000  -0.00000
 A2=     +2.79405  -0.00000  +2.79405  |  -0.00000  -0.00616  -0.00000
@@ -218,19 +218,19 @@ A3=     -0.00000  +2.79405  +2.79405  |  -0.00000  -0.00000  -0.00616
 Al   -0.00000  -0.00000  -0.00000 |  +0.00000  +0.00000  +0.00000
 P    +0.25000  +0.25000  +0.25000 |  -0.00000  -0.00000  -0.00000
 
-MY CG quadratic linesearch iter 3 fn val: -0.7849693391759869 | rms grad: 0.03419084557690376 within_stepsize: true , old step: 0.15847688223263742 , new step_size: 0.23771532334895612
+MY CG quadratic linesearch iter 3 fn val: -0.7849693391759887 | rms grad: 0.03419084557691698 within_stepsize: true , old step: 0.15847688223264667 , new step_size: 0.23771532334897
 
 START SCF ----------------
 SCF CALC 0001 energy  -10.68164733
 SCF CALC 0002 energy  -10.68164722  en_diff:   1.148512E-07  dq_diff:   4.443982E-07
 
-YES convergence in 2 iters, energy -10.681647215759652 eV   dq = [-0.968, 0.968]
+YES convergence in 2 iters, energy -10.681647215759629 eV   dq = [-0.968, 0.968]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.032364 seconds (5.79 M allocations: 562.687 MiB, 15.15% gc time)
+  0.722615 seconds (5.79 M allocations: 562.693 MiB, 14.10% gc time)
 
-FCALL 4 en:  -0.7850863045778661 (Ryd)  fsum:  5.897273000267335e-8  ssum:  4.108858643910162e-5    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FCALL 4 en:  -0.7850863045778644 (Ryd)  fsum:  5.8972729322335064e-8  ssum:  4.108858643912298e-5    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 A1=     +2.78591  +2.78591  -0.00000  |  -0.00218  -0.00000  -0.00000
 A2=     +2.78591  -0.00000  +2.78591  |  -0.00000  -0.00218  -0.00000
@@ -239,19 +239,19 @@ A3=     -0.00000  +2.78591  +2.78591  |  -0.00000  -0.00000  -0.00218
 Al   +0.00000  +0.00000  +0.00000 |  -0.00000  -0.00000  -0.00000
 P    +0.25000  +0.25000  +0.25000 |  +0.00000  +0.00000  +0.00000
 
-MY CG quadratic linesearch iter 4 fn val: -0.7850863045778661 | rms grad: 0.011990883456654179 within_stepsize: true , old step: 0.23771532334895612 , new step_size: 0.35493364891192464
+MY CG quadratic linesearch iter 4 fn val: -0.7850863045778644 | rms grad: 0.011990883456660346 within_stepsize: true , old step: 0.23771532334897 , new step_size: 0.35493364907028346
 
 START SCF ----------------
 SCF CALC 0001 energy  -10.68185680
 SCF CALC 0002 energy  -10.68186058  en_diff:   3.772648E-06  dq_diff:   1.426638E-05
 
-YES convergence in 2 iters, energy -10.681860575935227 eV   dq = [-0.973, 0.973]
+YES convergence in 2 iters, energy -10.681860575935675 eV   dq = [-0.973, 0.973]
 END SCF ------------------
 
 get_energy_force_stress_fft
-  1.008265 seconds (5.79 M allocations: 562.691 MiB, 13.32% gc time)
+  0.724598 seconds (5.79 M allocations: 562.695 MiB, 14.31% gc time)
 
-FCALL 5 en:  -0.7851019862558324 (Ryd)  fsum:  3.663488075489446e-7  ssum:  2.4639526327006487e-7    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FCALL 5 en:  -0.7851019862558652 (Ryd)  fsum:  3.6634881089771185e-7  ssum:  2.4639524474627037e-7    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 A1=     +2.78166  +2.78166  -0.00000  |  -0.00001  -0.00000  -0.00000
 A2=     +2.78166  -0.00000  +2.78166  |  -0.00000  -0.00001  -0.00000
@@ -260,11 +260,11 @@ A3=     -0.00000  +2.78166  +2.78166  |  -0.00000  -0.00000  -0.00001
 Al   -0.00000  -0.00000  -0.00000 |  +0.00000  +0.00000  +0.00000
 P    +0.25000  +0.25000  +0.25000 |  -0.00000  -0.00000  -0.00000
 
-yes conv sum_grad 7.168101193600257e-5 fn_diff_1 0.000116965401879221 fn_diff_2 1.5681677966283836e-5
+yes conv sum_grad 7.168100656489321e-5 fn_diff_1 0.00011696540187577931 fn_diff_2 1.5681678000811772e-5
 Relax done
 
 ---------------------------------
-Final Energy -10.681860575935227
+Final Energy -10.681860575935675
 A1=     +2.78166  +2.78166  -0.00000  |  -0.00001  -0.00000  -0.00000
 A2=     +2.78166  -0.00000  +2.78166  |  -0.00000  -0.00001  -0.00000
 A3=     -0.00000  +2.78166  +2.78166  |  -0.00000  -0.00000  -0.00001
@@ -273,7 +273,7 @@ Al   -0.00000  -0.00000  -0.00000 |  +0.00000  +0.00000  +0.00000
 P    +0.25000  +0.25000  +0.25000 |  -0.00000  -0.00000  -0.00000
 
 
-Energy new -145.33416977821537
+Energy new -145.33416977822148
 
 Force
 2×3 Array{Float64,2}:
@@ -283,4 +283,4 @@ Stress
 3×3 Array{Float64,2}:
  -1.30612e-5  -5.37793e-8  -5.37793e-8
  -5.37793e-8  -1.30612e-5  -5.37793e-8
- -5.37793e-8  -5.37793e-8  -1.30612e-5</pre><p>Energy is lower, stress is near zero, forces are zero by symmetry in Zinc Blende structure.</p><p>Force/Stress defaults are eV/Ang and eV/Ang^3.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../ug_fit/">Fit Coefficients »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Thursday 3 June 2021 22:56">Thursday 3 June 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+ -5.37793e-8  -5.37793e-8  -1.30612e-5</pre><p>Energy is lower, stress is near zero, forces are zero by symmetry in Zinc Blende structure.</p><p>Force/Stress defaults are eV/Ang and eV/Ang^3.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../ug_fit/">Fit Coefficients »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Thursday 3 June 2021 23:09">Thursday 3 June 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
