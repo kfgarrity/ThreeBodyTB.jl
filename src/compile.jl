@@ -19,7 +19,7 @@ function compile_note(; dir=default_compile_dir(), filename=default_compile_file
 
   In unix, you can create an alias with the Bash command:
   ```
-  ~ alias julia_threebodytb="julia --sysimage $path -e 'using threebodytb' -i"
+  ~ alias julia_threebodytb="julia --sysimage $path -e 'using ThreeBodyTB' -i"
   ```
   which you can put in your `~/.bashrc`, `~/.zshrc`, etc. This also executes `using ThreeBodyTB` so that ThreeBodyTB is loaded and ready to use, you can leave off ` -e 'using ThreeBodyTB' -i` if you don't want that. Then you can start Julia with a version of ThreeBodyTB installed with the command:
   ```

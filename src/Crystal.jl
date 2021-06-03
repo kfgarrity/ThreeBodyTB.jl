@@ -265,24 +265,29 @@ function makecrys(A,coords,types; units=missing)
     
     nat = length(types)
 
+    if nat != size(coords,1) #try to fix
+        coords = coords'
+    end
+
     if nat != size(coords,1)
+
         println(types)
         println(coords)
-        error("Error initilzing crystal, nat doesn't match", nat, size(coords,1)  )
+        error("Error initilzing crystal, nat doesn't match, nat from types: ", nat," size(coords,1): ", size(coords,1)  )
         
         return 
     end
 
     if (3,3) != size(A)
         println(A)
-        error("Error initilzing crystal, A wrong", size(A))
+        error("Error initilzing crystal, A wrong ", size(A))
         
         return 
     end
 
     if 3 != size(coords,2)
         println(coords)
-        error("Error initilzing crystal, coords wrong", size(coords))
+        error("Error initilzing crystal, coords wrong ", size(coords))
         
         return 
     end

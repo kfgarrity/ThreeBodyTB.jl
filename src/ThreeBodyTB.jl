@@ -163,9 +163,10 @@ Find the lowest energy atomic configuration of crystal `c`.
 - `grid=missing`: k-point grid, e.g. [10,10,10], default chosen automatically
 - `nsteps=100`: maximum iterations
 - `update_grid=true`: update automatic k-point grid during relaxation
-- `conv_thr = 2e-4 `: Convergence threshold for combo of forces, positions, energy
+- `conv_thr = 2e-3 `: Convergence threshold for gradient
+- `energy_conv_thr = 2e-4 `: Convergence threshold for energy in Ryd
 """
-function relax_structure(c::crystal; database=missing, smearing = 0.01, grid = missing, mode="vc-relax", nsteps=50, update_grid=true, conv_thr = 2e-4)
+function relax_structure(c::crystal; database=missing, smearing = 0.01, grid = missing, mode="vc-relax", nsteps=50, update_grid=true, conv_thr = 2e-3, energy_conv_thr = 2e-4)
 
     if ismissing(database)
         ManageDatabase.prepare_database(c)
@@ -175,7 +176,7 @@ function relax_structure(c::crystal; database=missing, smearing = 0.01, grid = m
         update_grid = false
     end
 
-    cfinal, tbc, energy, force, stress = Relax.relax_structure(c, database, smearing=smearing, grid=grid, mode=mode, nsteps=nsteps, update_grid=update_grid, conv_thr=conv_thr)
+    cfinal, tbc, energy, force, stress = Relax.relax_structure(c, database, smearing=smearing, grid=grid, mode=mode, nsteps=nsteps, update_grid=update_grid, conv_thr=conv_thr, energy_conv_thr = energy_conv_thr)
 
    
     println("Relax done")
@@ -190,6 +191,8 @@ function relax_structure(c::crystal; database=missing, smearing = 0.01, grid = m
 
 
     energy = convert_energy(energy)
+    println()
+    println("---------------------------------")
     println("Final Energy $energy ")
     
     print_with_force_stress(cfinal, force, stress)
