@@ -41,7 +41,7 @@ makedocs(
             "Structs" => "structs.md",
             "Functions" => "core.md",
         ],
-#        "Compile/Python" => "compile.md",
+        "Compile/Python" => "compile.md",
         "Additional Docstrings" => "every.md"
     ]
 )
