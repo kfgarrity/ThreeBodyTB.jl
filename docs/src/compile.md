@@ -27,6 +27,8 @@ functions, and then create a file called sys_threebodytb.so in
 
 julia --sysimage ~/.julia/sysimages/sys_threebodytb.so
 
+Note that the compilation takes several minutes and significant disk space.
+
 ## Python
 
 While running ThreeBodyTB using Julia is the easiest option, I
