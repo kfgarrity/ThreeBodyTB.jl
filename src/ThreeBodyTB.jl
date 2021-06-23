@@ -7,7 +7,6 @@ module ThreeBodyTB
 
 
 include("GlobalUnits.jl")
-
 include("SetDir.jl")
 
 include("Utility.jl")
@@ -147,6 +146,58 @@ function set_units(;energy=missing, length=missing, both=missing)
     
 end
 
+
+"""
+    function set_bin_dirs(;qe=missing, mpi=missing, pseudodir=missing, templatedir=missing, wannier=missing)
+
+Set directories where things like quantum espresso bins are located. If run with everything missing, instead print current dirs.
+
+- `qe` - set bin directory of quantum espresso. Needs pw and pp installed. No useful default.
+- `mpi` - set mpi command. something like "mpirun -np "
+- `pseudo` - set directory for pseudopotentials. Default is to use ../pseudo/gbrv_pbesol/ as distributed with this code
+- `template` - set directory for quantum espresso template files. Uses ../template_inputs/ by default.
+
+"""
+function set_bin_dirs(;qe=missing, mpi=missing, pseudodir=missing, templatedir=missing, wannier=missing)
+
+    if !ismissing(qe)
+        global QE_BIN_DIR_STRING = qe
+        println("set qe bin dir to $QE_BIN_DIR_STRING")
+    end
+
+    if !ismissing(mpi)
+        global MPI_STRING = mpi
+        println("set mpi string to $MPI_STRING")        
+    end
+
+    if !ismissing(pseudodir)
+        global PSEUDOS = pseudodir
+        println("set pseudopotential dir to $PSEUDOS")
+    end
+
+    if !ismissing(templatedir)
+        global TEMPLATEDIR = templatedir
+        println("set directory of QE templates to $TEMPLATEDIR")
+    end
+
+    if !ismissing(wannier)
+        global WANNIER_BIN_DIR_STRING = wannier
+        println("defunct: set wannier bin dir to $WANNIER_BIN_DIR_STRING")
+    end
+
+    if ismissing(qe) && ismissing(mpi) && ismissing(pseudodir) && ismissing(templatedir) && ismissing(wannier)
+        println()
+        println("Report:")
+        println()
+        println(QE_BIN_DIR_STRING)
+        println(MPI_STRING)
+        println(PSEUDOS)
+        println(TEMPLATEDIR)
+#        println(WANNIER_BIN_DIR_STRING)
+        println()
+    end
+    
+end
 
 
 

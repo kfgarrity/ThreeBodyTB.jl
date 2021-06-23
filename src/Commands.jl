@@ -1,3 +1,10 @@
+
+#default values
+
+using ..ThreeBodyTB:QE_BIN_DIR_STRING
+using ..ThreeBodyTB:WANNIER_BIN_DIR_STRING
+using ..ThreeBodyTB:MPI_STRING
+
 """
     function make_commands(nprocs=1)
 
@@ -20,13 +27,13 @@ and mpi commands (if any)
 
 
     #    mpi=`mpirun -n `
-    mpi=`mpirun -np   `    
-
+#    mpi=`$MPI_STRING`    
+    mpi=split(MPI_STRING)
 #    qebin = "/users/kfg/codes/q-e-qe-6.3.rc1/bin/"
 #    w90bin= "/users/kfg/codes/wannier90-2.1.0/"
 
-    qebin = "/home/kfg/codes/q-e-qe-6.5/bin/"
-    w90bin= "/users/kfg/codes/wannier90-2.1.0/"
+    qebin = QE_BIN_DIR_STRING
+    w90bin= WANNIER_BIN_DIR_STRING
 
 
     juiladir = "../"

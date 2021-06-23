@@ -63,7 +63,7 @@ using ..TB:write_tb_crys_kspace
 
 
 include("Commands.jl")
-using ..ThreeBodyTB:TEMPLATEDIR
+using ..ThreeBodyTB:TEMPLATES
 
 
 
@@ -132,7 +132,7 @@ makes the proj input file
     c_dict = make_commands(1)
 
 
-    template_file=open("$TEMPLATEDIR/template.proj")
+    template_file=open("$TEMPLATES/template.proj")
     temp = read(template_file, String)
     close(template_file)
     
@@ -189,7 +189,7 @@ function makeOG(prefix, tmpdir )
 """
 makes the OG file
 """
-    template_file=open("$TEMPLATEDIR/template_og.in")
+    template_file=open("$TEMPLATES/template_og.in")
     temp = read(template_file, String)
     close(template_file)
     

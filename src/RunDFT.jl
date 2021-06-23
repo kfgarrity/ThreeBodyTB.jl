@@ -31,8 +31,8 @@ using ..Atomdata:atoms
 
 include("Commands.jl")
 
-using ..ThreeBodyTB:TEMPLATEDIR
-
+using ..ThreeBodyTB:TEMPLATES
+using ..ThreeBodyTB:PSEUDOS
 
 
 """
@@ -88,12 +88,12 @@ Workflow for doing SCF DFT calculation on `crys`
 
 Return `dftout`
 """
-function runSCF(crys::crystal, inputstr=missing, prefix=missing, tmpdir="./", directory="./", functional="PBESOL", wannier=0, nprocs=1, skip=false, calculation="scf", dofree="all", tot_charge = 0.0, smearing = 0.01, magnetic=false, cleanup=false, use_backup=false, grid=missing)
+function runSCF(crys::crystal, inputstr=missing, prefix="qe", tmpdir="./", directory="./", functional="PBESOL", wannier=0, nprocs=1, skip=false, calculation="scf", dofree="all", tot_charge = 0.0, smearing = 0.01, magnetic=false, cleanup=false, use_backup=false, grid=missing)
 """
 Run SCF calculation using QE
 """
     qeout = []
-    println("runSCF 1")
+#    println("runSCF 1")
     if skip == true
         try
             savedir="$tmpdir/$prefix.save"
@@ -124,7 +124,7 @@ Run SCF calculation using QE
     savedir="$tmpdir/$prefix.save"
 
 
-    println("runSCF 2")
+#    println("runSCF 2")
     
     tmpdir, prefix, inputfile =  makeSCF(crys, directory, prefix, tmpdir, functional, wannier, calculation, dofree, tot_charge, smearing, magnetic, grid=grid)
     
@@ -132,11 +132,11 @@ Run SCF calculation using QE
     write(f, inputfile)
     close(f)
 
-    println("runSCF 3")
+#    println("runSCF 3")
 
     ret = run_pwscf(inputstr, outputstr, nprocs, directory, use_backup)    
-    println("DFT complete with error")
-    println("runSCF 4")
+#    println("DFT complete with error")
+#    println("runSCF 4")
 
     updated = false
     if calculation == "relax" || calculation == "vc-relax"
@@ -167,7 +167,7 @@ Run SCF calculation using QE
        
     end
     
-    println("runSCF 5")
+#    println("runSCF 5")
 
 
 #    savedir="$tmpdir/$prefix.save"
@@ -187,7 +187,7 @@ Run SCF calculation using QE
         doclean(savedir)
     end
 
-    println("runSCF 6")
+#    println("runSCF 6")
 
 
     return qeout
@@ -233,9 +233,11 @@ Make inputfile for SCF calculation
 
     c_dict = make_commands(1)
 
-    template_file=open("$TEMPLATEDIR/template_qe.in")
+    template_file=open("$TEMPLATES/template_qe.in")
     temp = read(template_file, String)
     close(template_file)
+
+    temp = replace(temp, "PSEUDODIR" => PSEUDOS)
     
     temp = replace(temp, "JULIANAT" => crys.nat)
 
@@ -657,6 +659,9 @@ function runSCF(crys::crystal; inputstr=missing, prefix=missing, tmpdir="./", di
 
     println(functional)
     if code == "QE"
+        if ismissing(prefix)
+            prefix="qe"
+        end
         qeout = missing
         try
             qeout = QE.runSCF(crys, inputstr, prefix, tmpdir, directory, functional, wannier, nprocs, skip, calculation, dofree, tot_charge, smearing, magnetic, cleanup, use_backup, grid)

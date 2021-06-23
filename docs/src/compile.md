@@ -27,7 +27,8 @@ functions into the memory, and then create a file called sys_threebodytb.so in
 
 julia --sysimage ~/.julia/sysimages/sys_threebodytb.so
 
-Note that the compilation takes several minutes and significant disk space.
+Note that the compilation takes several minutes and significant disk
+space. If you want to update the code, you will have to delete and remake the sys image.
 
 ## Python
 
