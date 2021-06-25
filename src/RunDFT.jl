@@ -268,6 +268,8 @@ Make inputfile for SCF calculation
     ntypes = length(settypes)
     temp = replace(temp, "JULIANTYPE" => ntypes)
 
+    
+    
     brav="ibrav = 0"
     if abs(tot_charge) > 1e-5
         a = crys.A[1,1]

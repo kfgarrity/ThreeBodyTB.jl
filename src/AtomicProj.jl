@@ -634,56 +634,126 @@ function loadXML_proj(savedir, B=missing)
     
     d= makedict_proj(savedir)
 
-    da = d["ATOMIC_PROJECTIONS"] #has all the real data in the xml
+    println("KEYS : ", keys(d))
 
-    nbnd = parse(Int, da["HEADER"]["NUMBER_OF_BANDS"][""])
-    nk = parse(Int, da["HEADER"]["NUMBER_OF_K-POINTS"][""])    
-    nspin = parse(Int, da["HEADER"]["NUMBER_OF_SPIN_COMPONENTS"][""])
-    natwfc = parse(Int, da["HEADER"]["NUMBER_OF_ATOMIC_WFC"][""])
-    nelec = parse(Float64, da["HEADER"]["NUMBER_OF_ELECTRONS"][""])
-    efermi = parse(Float64, da["HEADER"]["FERMI_ENERGY"][""])                
+    da = missing
+    if "ATOMIC_PROJECTIONS" in keys(d)
+        da = d["ATOMIC_PROJECTIONS"] #has all the real data in the xml
+    else
+        da = d["PROJECTIONS"] #has all the real data in the xml
+    end
 
-    units_energy = da["HEADER"]["UNITS_FOR_ENERGY"][:UNITS]
-    units_kpt = da["HEADER"]["UNITS_FOR_K-POINTS"][:UNITS]    
+    if "NUMBER_OF_BANDS" in keys(da["HEADER"])
+    
+        nbnd = parse(Int, da["HEADER"]["NUMBER_OF_BANDS"][""])
+        nk = parse(Int, da["HEADER"]["NUMBER_OF_K-POINTS"][""])    
+        nspin = parse(Int, da["HEADER"]["NUMBER_OF_SPIN_COMPONENTS"][""])
+        natwfc = parse(Int, da["HEADER"]["NUMBER_OF_ATOMIC_WFC"][""])
+        nelec = parse(Float64, da["HEADER"]["NUMBER_OF_ELECTRONS"][""])
+        efermi = parse(Float64, da["HEADER"]["FERMI_ENERGY"][""])                
+        
+#        units_energy = da["HEADER"]["UNITS_FOR_ENERGY"][:UNITS]
+#        units_kpt = da["HEADER"]["UNITS_FOR_K-POINTS"][:UNITS]    
 
-    println(units_energy, " " , units_kpt)
-    println("nbands: ", nbnd," nk: ", nk)
+    else
+        
+        nbnd = parse(Int, da["HEADER"][:NUMBER_OF_BANDS])
+        nk = parse(Int, da["HEADER"][Symbol("NUMBER_OF_K-POINTS")])    
+        nspin = parse(Int, da["HEADER"][:NUMBER_OF_SPIN_COMPONENTS])
+        natwfc = parse(Int, da["HEADER"][:NUMBER_OF_ATOMIC_WFC])
+        nelec = parse(Float64, da["HEADER"][:NUMBER_OF_ELECTRONS])
+        efermi = parse(Float64, da["HEADER"][:FERMI_ENERGY])                
+        
+#        units_energy = da["HEADER"]["UNITS_FOR_ENERGY"][:UNITS]
+#        units_kpt = da["HEADER"]["UNITS_FOR_K-POINTS"][:UNITS]    
 
-    kpts = parse_str_ARR_float(da["K-POINTS"][""])
-    kpts = reshape(kpts, 3,nk)'
+    end
+    
+#    println(units_energy, " " , units_kpt)
+#    println("nbands: ", nbnd," nk: ", nk)
 
+    proj = zeros(Complex{Float64}, nk, natwfc, nbnd)
+    eigs = zeros(nk,nbnd)
+
+    kpts = zeros(Float64, nk,3)
+    weights = zeros(Float64, nk)
+
+    overlaps = zeros(Complex{Float64}, nk, natwfc, natwfc)
+
+    
+    if "K-POINTS" in keys(da) #old format
+
+        kpts = parse_str_ARR_float(da["K-POINTS"][""])
+        weights = parse_str_ARR_float(da["WEIGHT_OF_K-POINTS"][""])
+
+        dap = da["PROJECTIONS"]
+        
+
+        for k in 1:nk
+            t = dap["K-POINT."*string(k)]
+            for a in 1:natwfc
+                proj[k, a, :] =  parse_str_ARR_complex(t["ATMWFC."*string(a)][""])
+            end
+        end
+        
+    
+        dae = da["EIGENVALUES"]
+        
+        for k in 1:nk
+            eigs[k, :] = parse_str_ARR_float(dae["K-POINT."*string(k)]["EIG"][""])
+            
+        end
+
+        kpts = reshape(kpts, 3,nk)'
+
+        dao = da["OVERLAPS"]
+
+        
+        for k in 1:nk
+            t = dao["K-POINT."*string(k)]
+            overlaps[k, :,:] = reshape(parse_str_ARR_complex(t["OVERLAP.1"][""]), natwfc, natwfc)'
+        end
+
+        
+    else #other format that QE switched to in order to break my code :<(
+
+#        println("asdf")
+        d_eigstates = da["EIGENSTATES"][""]
+        n = length(d_eigstates)
+        c = 0
+        for n = 2:6:n
+
+            c += 1
+
+            weights[c] = parse(Float64, d_eigstates[n]["K-POINT"][:Weight])
+            kpts[c,:] = parse_str_ARR_float(d_eigstates[n]["K-POINT"][""])
+
+            eigs[c,:] = parse_str_ARR_float(d_eigstates[n+2]["E"])
+
+            t =  d_eigstates[n+4]["PROJS"]["ATOMIC_WFC"]
+
+            for a in 1:natwfc
+                proj[c,a,:] =  parse_str_ARR_complex(t[a][""])
+            end
+
+        end
+
+        d_over = da["OVERLAPS"]["OVPS"]
+
+        for k = 1:nk
+            overlaps[k, :,:] =  reshape(parse_str_ARR_complex(d_over[k][""]), natwfc, natwfc)'
+        end
+        
+        
+    end        
+        
     if !(ismissing(B))
+
         kpts = kpts * inv(B)
     end
     
-    weights = parse_str_ARR_float(da["WEIGHT_OF_K-POINTS"][""])
-    
-    dae = da["EIGENVALUES"]
-    
-    eigs = zeros(nk,nbnd)
-    for k in 1:nk
-        eigs[k, :] = parse_str_ARR_float(dae["K-POINT."*string(k)]["EIG"][""])
-        
-    end
-
-    dap = da["PROJECTIONS"]
-
-    proj = zeros(Complex{Float64}, nk, natwfc, nbnd)
-    for k in 1:nk
-        t = dap["K-POINT."*string(k)]
-        for a in 1:natwfc
-            proj[k, a, :] =  parse_str_ARR_complex(t["ATMWFC."*string(a)][""])
-        end
-    end
 
 
-    dao = da["OVERLAPS"]
-    overlaps = zeros(Complex{Float64}, nk, natwfc, natwfc)
-
-    for k in 1:nk
-        t = dao["K-POINT."*string(k)]
-        overlaps[k, :,:] = reshape(parse_str_ARR_complex(t["OVERLAP.1"][""]), natwfc, natwfc)'
-    end
 
 #    println(overlaps)
 
