@@ -52,9 +52,9 @@ savefig("alp.png"); #hide
 
 ![AlP plot](alp.png)
 
-Use `do_display=true` to produce an interactive plot. Here is is `false` because we are saving a static figure with `savefig` for the docs.
+Use `do_display=true` (the default) to produce an interactive plot. Here `do_display` is set to `false` because we are saving a static figure with `savefig` for the docs.
 
-The default `plot_bandstr` just picks some random kpoints, but you can add your own kpath. We also project onto the *s* orbital of Al.
+The default `plot_bandstr` just picks some random kpoints, but you can add your own kpath. We can also project onto the *s* orbital of Al.
 
 ```@example 1
 kpath=[0.0 0.0 0.0; 0.5 0.5 0.5; 0.0 0.5 0.5];
