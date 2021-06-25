@@ -4,15 +4,16 @@
     prefix = 'qe'
     tstress = .true.
     tprnfor = .true.
-    pseudo_dir = '/home/kfg/psuedo/gbrv_1.5/',
+    pseudo_dir = '/home/kfg/codes/ThreeBodyTB.jl/src/../pseudo/gbrv_pbesol',
+!    pseudo_dir = '/home/kfg/psuedo/gbrv_1.5/',
 !    pseudo_dir = '/home/kevin/psuedo/gbrv_1.5/',
 !    pseudo_dir = '/users/kfg/psuedo/gbrv_1.5/',
 !    pseudo_dir = '/home/kevin/psp/'
-    outdir = '/wrk/kfg/julia_data/MgS/dimer.in_vnscf_coords_3'
+    outdir = 'dimer.in_vnscf_coords_3'
     disk_io = 'low'
     wf_collect = .true.
     verbosity = 'high'    
-    nstep = 100
+    nstep = 30
  /
 &system
     ibrav = 0 
@@ -49,11 +50,11 @@ ATOMIC_SPECIES
 Mg  24.31  mg.pbesol.UPF  
 S  32.06  s.pbesol.UPF  
 ATOMIC_POSITIONS crystal
-Mg   0.0000000000  0.0000000000 -0.0940111620
-S   0.0000000000  0.0000000000  0.0940111620
+Mg   0.0000000000000000e+00  0.0000000000000000e+00 -9.4011161999999995e-02
+S   0.0000000000000000e+00  0.0000000000000000e+00  9.4011161999999995e-02
 CELL_PARAMETERS
-  14.0000000000  0.0000000000  0.0000000000
-  0.0000000000  14.0000000000  0.0000000000
-  0.0000000000  0.0000000000  20.0000000000
+  1.4000000000000000e+01  0.0000000000000000e+00  0.0000000000000000e+00
+  0.0000000000000000e+00  1.4000000000000000e+01  0.0000000000000000e+00
+  0.0000000000000000e+00  0.0000000000000000e+00  2.0000000000000000e+01
 K_POINTS automatic
-  4  4  4 0 0 0
+       4       4       4 0 0 0

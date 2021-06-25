@@ -1642,7 +1642,7 @@ function calc_energy_fft_band(hk3, sk3, nelec; smearing=0.01, return_more_info=f
                     end
 
                     vals, vects = eigen(hk, sk)
-                    VALS[c,:] = vals
+                    VALS[c,:] = real(vals)
                     if return_more_info
                         VECTS[c,:,:] = vects
                     end

@@ -17,21 +17,23 @@ function loaddata(dirs; scf=true)
         dft = ThreeBodyTB.QE.loadXML(tfull*"/qe.save")
         tbc = []
         tbc_scf = []
+
+
         try
             if scf
-                tbc = ThreeBodyTB.TB.read_tb_crys("projham.xml.gz", directory=tfull)
+                tbc = ThreeBodyTB.TB.read_tb_crys_kspace("projham_K.xml.gz", directory=tfull)
                 tbc_scf = ThreeBodyTB.SCF.remove_scf_from_tbc(tbc)
             else
-                tbc_scf = ThreeBodyTB.TB.read_tb_crys("projham.xml.gz", directory=tfull)
+                tbc_scf = ThreeBodyTB.TB.read_tb_crys_kspace("projham_K.xml.gz", directory=tfull)
             end
         catch
-            tbc = ThreeBodyTB.AtomicProj.projwfx_workf(dft, directory=tfull, writefile="projham.xml", skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15)
-            if scf
-                tbc_scf = ThreeBodyTB.SCF.remove_scf_from_tbc(tbc)
-                ThreeBodyTB.TB.write_tb_crys(t*"/projham_scf.xml.gz", tbc_scf)
-            else
-                tbc_scf = tbc
-            end
+            println("failed to load $t $tfull")
+#            tbc,tbck,projwarn = ThreeBodyTB.AtomicProj.projwfx_workf(dft, directory=tfull, skip_og=true, skip_proj=true, freeze=true, localized_factor = 0.15,only_kspace=true )
+#            if scf
+#                tbc_scf = ThreeBodyTB.SCF.remove_scf_from_tbc(tbck)
+#            else
+#                tbc_scf = tbck
+#            end
             
         end
         
@@ -61,8 +63,11 @@ function test_force()
             
             for scf = [false, true]
                 @suppress begin
-                tbc_list, dft_list = loaddata(dirst, scf=scf);
-                     database_rec = ThreeBodyTB.FitTB.do_fitting_recursive(tbc_list,dft_list = dft_list,  fit_threebody=false, fit_threebody_onsite=false);
+                    tbc_list, dft_list = loaddata(dirst, scf=scf);
+
+                    println("TBC list ", tbc_list)
+                    println("DFT list ", dft_list)
+                    database_rec = ThreeBodyTB.FitTB.do_fitting_recursive(tbc_list,dft_list = dft_list,  fit_threebody=false, fit_threebody_onsite=false);
 
 
                 x = 4;
@@ -111,7 +116,11 @@ function test_stress()
 
             tbc_list, dft_list = loaddata(dirst, scf=false);
 
-            database = ThreeBodyTB.FitTB.do_fitting(tbc_list, fit_threebody=false, fit_threebody_onsite=false, do_plot=false);
+            println("DFT_list", dft_list)
+            println("TBC_list", tbc_list)
+
+            database = ThreeBodyTB.FitTB.do_fitting_recursive(tbc_list, dft_list = dft_list, fit_threebody=false, fit_threebody_onsite=false, do_plot=false, niters=5);
+
             #        database = FitTB.do_fitting_recursive(tbc_list,dft_list = dft_list,  fit_threebody=true, fit_threebody_onsite=false);
 
             x = 1;
