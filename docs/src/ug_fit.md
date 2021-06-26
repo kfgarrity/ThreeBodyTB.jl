@@ -1,6 +1,6 @@
-# Fitting tight-binding coefficients from Quantum Espresso.
+# Fitting tight-binding coefficients from DFT
 
-ThreeBodyTB has a set of pre-fit coefficients that are sufficient for
+ThreeBodyTB.jl has a set of pre-fit coefficients that are sufficient for
 running elemental or binary systems without doing your own fitting. If
 you still want to do the fitting yourself, read on...
 
@@ -8,8 +8,8 @@ Currently, ThreeBodyTB is set up to fit coefficients from [Quantum
 Espresso](https://www.quantum-espresso.org/) (QE) DFT calculations from `pw.x` using
 the `projwfc.x` code to get atomic-wavefunction-projected band structures.
 
-It may be easiest to consider the fitting example in the `examples/`
-folder while reading this.
+It may be easiest to consider the fitting example `examples/fit_model.jl`
+while reading this.
 
 A brief overview of the steps:
 
@@ -93,11 +93,12 @@ tbc, tbck, projection_warning = ThreeBodyTB.AtomicProj.projwfx_workf(
      only_kspace=true)
 ```
 
-`tbck` is the important return, which is the tight binding Hamiltonian
-in k-space. `projection_warning` will warn you if the quality of the
-projection is detected to be low. This can be caused by atoms that are
-too close together or not including enough empty bands to guarantee that
-all of the atomic wavefunctions can project onto some states.
+`tbck` is the important return (type `TB.tb_crys_kspace`), which is the
+tight-binding Hamiltonian in k-space. `projection_warning` will warn
+you if the quality of the projection is detected to be low. This can
+be caused by atoms that are too close together or not including enough
+empty bands to guarantee that all of the atomic wavefunctions can
+project onto some states.
 
 In order to
 fit a SCF model, it is necessary to subtract the self-consistent part
@@ -107,11 +108,15 @@ from the TB Hamiltonian:
 
 You can read/write either `tbck` or `tbck_scf` with `ThreeBodyTB.read_tb_crys_kspace` or `ThreeBodyTB.write_tb_crys_kspace`
 
-If `only_kspace=false` you will also get the real-space `tbc` output,
-which is similar to the "prefix\_hr.dat" from Wannier90, and you can also use
-`remove_scf_from_tbc` on that struct and use it in the fitting. The
-read/write functions are `ThreeBodyTB.read_tb_crys` and
-`ThreeBodyTB.write_tb_crys`. These files can also be used to
+If `only_kspace=false` you will also get the real-space `tbc` (type
+`TB.tb_crys`) output, which is similar to the "prefix\_hr.dat" from
+Wannier90. You can also use `remove_scf_from_tbc` on that struct and
+use it during fitting. This is only possible if the k-grid in the
+non-SCF calculation doesn't include symmetry, so the calculation will
+take longer.
+
+The read/write functions for real-space  are `ThreeBodyTB.read_tb_crys`
+and `ThreeBodyTB.write_tb_crys`. These files can also be used to
 interpolate band structures or DOS to arbitrary k-points like a
 Wannier Hamiltonian, while the k-space versions are limited to fixed
 k-point grids.
